@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: backtest-backend:latest
+    container_name: customized_backtest_backend
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./backtest_results:/app/backtest_results
+    expose:
+      - "8000"
+
+  web:
+    image: nginx:alpine
+    container_name: customized_backtest_web
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html
+      # 让 /api/* 反代到 backend:8000（否则会被当成 SPA 路由/静态资源）
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro

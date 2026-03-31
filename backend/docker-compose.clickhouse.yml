@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    container_name: quant-clickhouse
+    restart: always
+    environment:
+      CLICKHOUSE_DB: quant_data
+      CLICKHOUSE_USER: quant
+      CLICKHOUSE_PASSWORD: Jinziguan123
+      TZ: Asia/Shanghai
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - ./clickhouse-data:/var/lib/clickhouse
