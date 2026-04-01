@@ -1,0 +1,4 @@
+.DS_Store
+
+./backend/backtest_results
+.idea/
